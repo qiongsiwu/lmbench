@@ -36,17 +36,17 @@ typedef unsigned char bool_t;
 #include        <sys/resource.h>
 #define PORTMAP
 #ifndef __linux__
-#include	<rpc/rpc.h>
+//#include	<rpc/rpc.h>
 #else
-#include	<tirpc/rpc/rpc.h>
+//#include	<tirpc/rpc/rpc.h>
 #endif
 
 #endif
 
 #ifndef __linux__
-#include	<rpc/types.h>
+//#include	<rpc/types.h>
 #else
-#include	<tirpc/rpc/types.h>
+//#include	<tirpc/rpc/types.h>
 #endif
 
 #include 	<stdarg.h>
@@ -227,7 +227,7 @@ result_t* get_results();
 	__usecs -= t_overhead() + get_n() * l_overhead();		\
 	settime(__usecs >= 0. ? (uint64)__usecs : 0);			\
 }
-	
+
 #define	BENCH_INNER(loop_body, enough) { 				\
 	static iter_t	__iterations = 1;				\
 	int		__enough = get_enough(enough);			\
@@ -275,17 +275,17 @@ void lmbench_usage(int argc, char *argv[], char* usage);
 typedef u_long iter_t;
 typedef void (*benchmp_f)(iter_t iterations, void* cookie);
 
-extern void benchmp(benchmp_f initialize, 
+extern void benchmp(benchmp_f initialize,
 		    benchmp_f benchmark,
 		    benchmp_f cleanup,
-		    int enough, 
+		    int enough,
 		    int parallel,
 		    int warmup,
 		    int repetitions,
 		    void* cookie
 	);
 
-/* 
+/*
  * These are used by weird benchmarks which cannot return, such as page
  * protection fault handling.  See lat_sig.c for sample usage.
  */
