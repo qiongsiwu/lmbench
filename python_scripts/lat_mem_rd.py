@@ -100,6 +100,7 @@ def main():
     else:
         memory_size_str = sys.argv[1]
         print("Total memory size %s" %(memory_size_str))
+        command[-2] = memory_size_str
         run_bm(command, result_abs_path)
 
 
