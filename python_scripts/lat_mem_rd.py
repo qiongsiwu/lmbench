@@ -48,7 +48,9 @@ def plot(df, mem_size, result_dir):
                  linewidth=1, alpha=0.9, label=column)
     ax1.set_xscale("log", basex=2)
     ax1.get_xaxis().set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.4f'))
-    plt.legend()
+    plt.legend(title="Stride")
+    plt.xlabel('Array Size in MB', fontsize=18)
+    plt.ylabel('Latency in ns', fontsize=18)
     result_graph_name = result_dir + 'lat_mem_rd_{0}.png'.format(mem_size)
     plt.savefig(result_graph_name)
 
