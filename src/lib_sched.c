@@ -33,7 +33,7 @@ extern int sched_pin(int cpu);
 /*
  * The interface used by benchmp.
  *
- * childno is the "logical" child id number.  
+ * childno is the "logical" child id number.
  *	In range [0, ..., parallel-1].
  * benchproc is the "logical" id within the benchmark process.  The
  *	benchmp-created process is logical ID zero, child processes
@@ -47,7 +47,7 @@ handle_scheduler(int childno, int benchproc, int nbenchprocs)
 {
 	int	cpu = 0;
 	char*	sched = getenv("LMBENCH_SCHED");
-	
+
 	if (!sched || strcasecmp(sched, "DEFAULT") == 0) {
 		/* do nothing.  Allow scheduler to control placement */
 		return 0;
@@ -61,9 +61,9 @@ handle_scheduler(int childno, int benchproc, int nbenchprocs)
 		 */
 		cpu = childno;
 	} else if (strcasecmp(sched, "BALANCED_SPREAD") == 0) {
-		/* 
-		 * assign each benchmark process to its own processor, 
-		 * logically as far away from neighboring IDs as 
+		/*
+		 * assign each benchmark process to its own processor,
+		 * logically as far away from neighboring IDs as
 		 * possible.  This can help identify bus contention
 		 * issues in SMPs with hierarchical busses or NUMA
 		 * memory.
@@ -76,10 +76,10 @@ handle_scheduler(int childno, int benchproc, int nbenchprocs)
 		 */
 		cpu = childno * (nbenchprocs + 1) + benchproc;
 	} else if (strcasecmp(sched, "UNIQUE_SPREAD") == 0) {
-		/* 
+		/*
 		 * assign each benchmark process and each child process
-		 * to its own processor, logically as far away from 
-		 * neighboring IDs as possible.  This can help identify 
+		 * to its own processor, logically as far away from
+		 * neighboring IDs as possible.  This can help identify
 		 * bus contention issues in SMPs with hierarchical busses
 		 * or NUMA memory.
 		 */
@@ -87,11 +87,11 @@ handle_scheduler(int childno, int benchproc, int nbenchprocs)
 	} else if (strncasecmp(sched, "CUSTOM ", strlen("CUSTOM ")) == 0) {
 		cpu = custom(sched + strlen("CUSTOM"), childno);
 	} else if (strncasecmp(sched, "CUSTOM_UNIQUE ", strlen("CUSTOM_UNIQUE ")) == 0) {
-		cpu = custom(sched + strlen("CUSTOM_UNIQUE"), 
+		cpu = custom(sched + strlen("CUSTOM_UNIQUE"),
 			     childno * (nbenchprocs + 1) + benchproc);
 	} else {
 		/* default action: do nothing */
-		return;
+		return 0;
 	}
 
 	return sched_pin(cpu % sched_ncpus());
@@ -133,7 +133,7 @@ custom(char* str, int cpu)
 	if (values == NULL) {
 		nvalues = 0;
 		values = (int*)malloc(sizeof(int));
-	
+
 		while (*str) {
 			char* q;
 			while (*str && !isdigit(*str)) str++;
@@ -199,7 +199,7 @@ sched_pin(int cpu)
 	static int ncpus = 0;
 	int i;
 	int j;
-	
+
 	if (cpumask == NULL) {
 		sz = 1 + (2 * sched_ncpus()) / (8 * sizeof(unsigned long));
 		mask = (unsigned long*)malloc(sz * sizeof(unsigned long));
