@@ -47,7 +47,7 @@ def plot(df, mem_size, result_dir):
         ax1.plot(df['Size'], df[column], marker='', \
                  linewidth=1, alpha=0.9, label=column)
     ax1.set_xscale("log", basex=2)
-    ax1.get_xaxis().set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.4f'))
+    ax1.get_xaxis().set_major_formatter(matplotlib.ticker.FormatStrFormatter('%.3f'))
     plt.legend(title="Stride")
     plt.xlabel('Array Size in MB', fontsize=18)
     plt.ylabel('Latency in ns', fontsize=18)

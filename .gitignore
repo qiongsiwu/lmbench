@@ -1,1 +1,5 @@
 build/*
+__pycache__
+
+# ignore temp result directory 
+results/lat_mem_rd
