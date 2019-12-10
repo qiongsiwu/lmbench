@@ -30,6 +30,7 @@ def main():
         print("Cannot open pickled file. Trying CSV. ")
         try:
             df = pd.read_csv(path)
+            df = df.loc[:, 'Size':'512']
             lat_mem_rd.plot(df, size, result_dir)
         except:
             print("Cannot open csv file. ")
